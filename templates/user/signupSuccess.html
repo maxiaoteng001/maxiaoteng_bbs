@@ -1,0 +1,6 @@
+{% block page_content %}
+    <h1>恭喜, 你已注册成功.</h1>
+    <p>用户名:{{username}}</p>
+    <p>请牢记密码, 忘记密码只能重置, 无法不能找回</p>
+    <a href={{url_for('user.signin')}}>点击如下链接去登录吧!</a>
+{% endblock %}

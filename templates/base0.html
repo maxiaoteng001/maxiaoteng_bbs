@@ -1,0 +1,52 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+    {% if user == None %}
+        MXT BBS
+    {% else %}
+        {{user.username}} 已登录
+    {% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target="#example-navbar-collapse">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">MXT BBS</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="example-navbar-collapse">
+        <ul class="nav navbar-nav">
+            <!--如果未登录, 显示登录\注册按钮-->
+            {% if user == None %}
+                <li class="active"><a href={{url_for("user.signin")}}>登录</a></li>
+                <li class="active"><a href={{url_for("user.signup")}}>注册</a></li>
+            {% else %}
+                <li class="active"><a href='/profile/{{user.user_detail}}'>{{user.username}}</a></li>
+                <li class="active"><a href={{url_for("user.signout")}}>退出</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+    <!-- 自定义两个块-->
+    {% block page_content %} {% endblock %}
+    {% block page_content1 %} {% endblock %}
+    {% block page_content2 %} {% endblock %}
+    {% block footer %} {% endblock %}
+
+{% endblock %}
+
+
+

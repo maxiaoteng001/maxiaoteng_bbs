@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if user == None %}
+        XX用户
+    {% else %}
+        {{user.username}}编辑信息
+    {% endif %}
+{% endblock %}
+
+{% block page_content %}
+    <p>用户将在这里编辑个人资料</p>
+    {% if user == None %}
+        <p>目前没有用户</p>
+    {% else %}
+        <p>这是{{user.username}}的主页</p>
+    {% endif %}
+{% endblock %}
