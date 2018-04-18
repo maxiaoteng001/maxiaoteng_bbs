@@ -29,7 +29,7 @@
                 <li class="active"><a href={{url_for("user.signin")}}>登录</a></li>
                 <li class="active"><a href={{url_for("user.signup")}}>注册</a></li>
             {% else %}
-                <li class="active"><a href='/profile/{{user.user_detail}}'>{{user.username}}</a></li>
+                <li class="active"><a href='/user/{{user.username}}'>{{user.username}}</a></li>
                 <li class="active"><a href={{url_for("user.signout")}}>退出</a></li>
             {% endif %}
         </ul>
@@ -39,12 +39,27 @@
 {% endblock %}
 
 {% block content %}
+<script src="/static/js/utils.js"></script>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8  bg-success">
+                {% block page_content %} {% endblock %}
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+                {% block sidebar %} {% endblock %}
+            </div>
+        </div>
+
+    </div>
 
     <!-- 自定义两个块-->
-    {% block page_content %} {% endblock %}
     {% block page_content1 %} {% endblock %}
-    {% block page_content2 %} {% endblock %}
     {% block footer %} {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
 
 {% endblock %}
 

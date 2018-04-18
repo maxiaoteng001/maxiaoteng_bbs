@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/lib/editor/editor.css">
+    <link rel="stylesheet" href="/static/lib/webuploader/webuploader.css">
+{% endblock %}
+
+
+{% block page_content %}
+    <div id="main">
+        <div id="content">
+            <div class="panel">
+                <div class="inner post">
+<form id="create_topic_form" method="post" action="{{ url_for('.add') }}">
+    <fieldset>
+        <span class="tab-selector">选择版块：</span>
+        <select name="board_id" id="board" required>
+            <option value="">请选择</option>
+                {% for b in bs %}
+                <option value="{{ b.id }}">{{ b.title }}</option>
+                {% endfor %}
+        </select>
+        <br>
+        <textarea autofocus class='' id='title'
+                  name='title' rows='2'
+                  placeholder="标题字数 10 字以上"></textarea>
+        <div class='markdown_editor in_editor'>
+          <div class='markdown_in_editor'>
+            <textarea class='editor' name='content' rows='20' placeholder='文章支持 Markdown 语法, 请注意标记代码'></textarea>
+            <!--<div class='editor_buttons'>-->
+              <!--<input type="submit" class='span-primary submit_btn' data-loading-text="提交中" value="提交">-->
+            <!--</div>-->
+          </div>
+        </div>
+    </fieldset>
+        <button class="btn btn-primary">提交</button>
+</form>
+                </div></div></div></div>
+{% endblock %}
+
+
+
+{% block sidebar %}
+
+ <div id='sidebar'>
+  <div class='panel'>
+    <div class='header'>
+      <span class='col_fade'>Markdown 语法参考</span>
+    </div>
+    <div class='inner'>
+      <ol>
+        <li><tt>### 单行的标题</tt></li>
+        <li><tt>**粗体**</tt></li>
+        <li><tt>`console.log('行内代码')`</tt></li>
+        <li><tt>```js\n code \n```</tt> 标记代码块</li>
+        <li><tt>[内容](链接)</tt></li>
+        <li><tt>![文字说明](图片链接)</tt></li>
+      </ol>
+      <span><a href='https://segmentfault.com/markdown' target='_blank'>Markdown 文档</a></span>
+    </div>
+  </div>
+ </div>
+
+{% endblock %}
+
+
+
+
+{% block scripts %}
+{{ super() }}
+    <script src="/static/lib/markdownit.js"></script>
+    <script src="/static/lib/webuploader/webuploader.withoutimage.js"></script>
+    <script src="/static/lib/editor/editor.js"></script>
+    <script src="/static/lib/editor/ext.js"></script>
+<script>
+  (function () {
+    var editor = new Editor();
+    editor.render($('.editor')[0]);
+  })();
+</script>
+{% endblock %}

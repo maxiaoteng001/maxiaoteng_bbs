@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+
+{% block page_content%}
+<script src="/static/js/utils.js"></script>
+
+<!--新增表单-->
+<form class="form-horizontal .contain" role="form" method="post" action={{url_for('board.add')}}>
+    <div class="form-group">
+        <label for="username" class="col-sm-2 control-label">新增</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="username" name="title" placeholder="添加的模块">
+        </div>
+    </div>
+    <input type="hidden" name="user_id" value={{user.id}}>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary" id="add-btn">新增</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-hover table-responsive table-bordered col-md-8 todo-table">
+    <thead class="text-center">
+    <th  style="text-align: center;" class="active col-md-1">No.</th>
+    <th style="text-align: center;" class="active col-md-2">板块名称</th>
+    <th style="text-align: center;" class="active col-md-1">创建时间</th>
+    <th style="text-align: center;" class="active col-md-1">删除</th>
+    </thead>
+    <tbody>
+    {% if boards != None %}
+    {% for b in boards %}
+    <tr class="text-center" data-id="{{b.id}}">
+
+        <td>{{ loop.index }}</td>
+        <td>{{ b.title }}</td>
+        <td>
+            <script>
+            var ct = timeString({{b.ct}})
+            document.write(ct)
+            </script>
+        </td>
+        <td>
+            <button type="button" class="btn btn-danger delete-btn" onclick="bindEventBoardDelete()">删除</button>
+        </td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/ajax/board.js"></script>
+<script src="/static/js/jquery-3.3.1.min.js"></script>
+
+{% endblock %}

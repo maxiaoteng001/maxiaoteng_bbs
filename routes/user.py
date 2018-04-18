@@ -34,13 +34,13 @@ def signin():
             log('登录成功', user.username)
             session['username'] = user.username
             session.permanent = True
-            return redirect(url_for('app.index'))
+            return redirect(url_for('index'))
 
 
 @main.route('/signout')
 def signout():
     session.pop('username', None)
-    return redirect(url_for('app.index'))
+    return redirect(url_for('index'))
 
 
 @main.route('/signup', methods=['get', 'post'])
@@ -71,11 +71,11 @@ def search_pass():
 @main.route('/user/<username>')
 def user_detail(username):
     user = User.find_by(username=username)
-    return render_template('user/user_detail.html', user=None)
+    return render_template('user/user_detail.html', user=user)
 
 
 @main.route('/user/edit/<username>')
 def user_edit(username):
     user = User.find_by(username=username)
-    return render_template('user/user_edit.html', user=None)
+    return render_template('user/user_edit.html', user=user)
 

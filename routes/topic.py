@@ -4,54 +4,67 @@ from flask import (
     redirect,
     url_for,
     Blueprint,
+    abort,
 )
 
-from models.todo import Todo
-from routes import current_user, json_response
+from routes import *
+
+from models.topic import Topic
+from models.board import Board
+from models.reply import Reply
 from utils import log
 
-# 创建一个蓝图对象
-# 然后在flask主代码中[注册蓝图]来使用
-# 第一个是蓝图的名字, 在app.py的时候使用
-# 第二个是套路
 main = Blueprint('topic', __name__)
 
 
-@main.route('/xx', methods=['GET'])
-# 显示todo首页,也就是查找所有todo并返回
+import uuid
+csrf_tokens = dict()
+@main.route("/")
 def index():
-    user = current_user()
-    log('当前登录用户:', user)
-    # 如果用户未登陆, 跳转到首页, 表示未登录状态
-    if user is None:
-        return redirect(url_for("user.signin"))
-    else:
-        todos = Todo.find_all(user_id=user.id, deleted=False)
-        return render_template("/todo/todo_index.html", user=user, todos=todos)
+    return redirect(url_for('index', board_id=0))
 
 
-@main.route('/add', methods=['POST'])
+@main.route('/<int:id>')
+def detail(id):
+    t = Topic.get(id)
+    user_id = t.user_id
+    author = User.find(user_id)
+
+    # log(type(t.data_count(Reply)))
+    # 传递 topic 的所有 reply 到 页面中
+    return render_template("topic/detail.html", user=current_user(), topic=t, author=author)
+
+
+@main.route("/add", methods=["POST"])
 def add():
     form = request.form
-    t = Todo.new(form)
-    t.save()
-    return redirect(url_for('todo.index'))
+    u = current_user()
+    m = Topic.new(form, user_id=u.id)
+    # for i in range(1000):
+    #     m = Topic.new(form, user_id=u.id)
+    return redirect(url_for('.detail', id=m.id))
 
 
-@main.route('/complete/<int:id>')
-def complete_todo(id):
-    t = Todo.complete(id)
-    if t is not None:
-        return json_response(t.json())
+@main.route("/delete")
+def delete():
+    id = int(request.args.get('id'))
+    token = request.args.get('token')
+    u = current_user()
+    # 判断 token 是否是我们给的
+    if token in csrf_tokens and csrf_tokens[token] == u.id:
+        csrf_tokens.pop(token)
+        if u is not None:
+            print('删除 topic 用户是', u, id)
+            Topic.delete(id)
+            return redirect(url_for('.index'))
+        else:
+            abort(404)
     else:
-        return redirect(url_for('todo.index'))
+        abort(403)
 
 
-@main.route('/delete/<int:id>')
-def delete_todo(id):
-    t = Todo.find(id)
-    t = t.delete()
-    if t is not None:
-        return json_response(t.json())
-    else:
-        return redirect(url_for('todo.index'))
+@main.route("/new")
+def new():
+    user=current_user()
+    bs = Board.find_all(deleted=False)
+    return render_template("topic/new1.html", bs=bs, user=user)

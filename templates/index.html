@@ -1,7 +1,66 @@
 {% extends "base.html" %}
 
-
 {% block page_content %}
+
+<p>这里是首页</p>
+<p>这里是页面区域, 展示主题列表</p>
+<a href="/0" class="btn btn-info btn-lg active" role="button">全部</a>
+{% for b in boards %}
+    <a href="/{{ b.id }}" class="btn btn-success btn-lg active" role="button">{{ b.title }}</a>
+{% endfor %}
+
+<table class="table table-hover table-responsive col-md-8 topic-table">
+    <thead class="text-left">
+    <th class="active col-md-1">No.</th>
+    <th class="active col-md-2">标题</th>
+    <th class="active col-md-1">创建时间</th>
+    <th class="active col-md-1">回复/浏览</th>
+    <th class="active col-md-1">发帖人</th>
+    <th class="active col-md-1">删除</th>
+    </thead>
+    <tbody>
+    {% if boards != None %}
+    {% for t in ts %}
+    <tr data-id="{{t.id}}">
+
+        <td>{{ loop.index }}</td>
+        <td><a href="/topic/{{ t.id }}">{{ t.title }}</a></td>
+        <td>
+            <script>
+            var ct = timeString({{t.ct}})
+            document.write(ct)
+            </script>
+        </td>
+        <td>
+            <p>t.data_count(Reply) }}</p>
+            /
+            {{ t.views }}
+        </td>
+        <td>
+            <a href="/user/{{ t.user().username }}">
+                {{ t.user().username }}
+            </a>
+        </td>
+        <td>
+            <button type="button" class="btn btn-danger delete-btn" onclick="bindEventBoardDelete()">删除</button>
+        </td>
+    </tr>
+    {% endfor %}
+
+    {% else %}
+    <p  style="text-align: center;">话题为空</p>
+    {% endif %}
+
+    </tbody>
+</table>
+
+{% endblock %}
+
+
+{% block sidebar %}
+
+<a href="{{url_for('topic.new')}}" class="btn btn-info btn-lg active" role="button">新增话题</a>
 <p>这里是首页</p>
 <p>这里是页面区域, 展示主题列表</p>
 {% endblock %}
+

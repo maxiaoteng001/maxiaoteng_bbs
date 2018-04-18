@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block page_content %}
+
+
+    <p>这是主题详情页, 用户{{ user.username }}, topic{{ topic.title }}</p>
+
+
+    <!--topic标题-->
+    <div class="row bg-success">
+        <h1 class="text-center">{{ topic.title }}</h1>
+    </div>
+    <div class="row">
+        <span class="col-sm-4">发布时间:
+            <script>
+            var ct = timeString({{topic.ct}})
+            document.write(ct)
+            </script>
+        </span>
+        <span class="col-sm-2">作者<a href="/user/{{ topic.user().username }}">{{ topic.user().username }}</a></span>
+        <span class="col-sm-2">{{ topic.views }}次浏览</span>
+        <span class="col-sm-2">来自于<a href="/{{ topic.board().id }}">{{ topic.board().title }}板块</a></span>
+
+    </div>
+    <hr>
+    <!-- topic 内容-->
+    <div class="bg-info">
+        <p>{{ topic.content }}</p>
+    </div>
+
+    <!-- topic 评论 -->
+
+
+{% endblock %}

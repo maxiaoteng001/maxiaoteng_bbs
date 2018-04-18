@@ -1,3 +1,4 @@
+import uuid
 
 from flask import (
     Flask,
@@ -14,6 +15,10 @@ import config
 
 
 # 创建一个Flask实例
+from models.board import Board
+from models.topic import Topic
+from routes import current_user
+
 app = Flask(__name__)
 
 # 导入flask-bootstrap
@@ -28,18 +33,39 @@ app.secret_key = config.SECRET_KEY
 # 访问todo_routes中的路由,自动增加前缀/to do
 from routes.user import main as user_routes
 app.register_blueprint(user_routes, )
-from routes.topic import main as topic_routes
+from routes.topic import main as topic_routes, csrf_tokens
+
 app.register_blueprint(topic_routes, url_prefix="/topic")
+from routes.reply import main as reply_routes
+app.register_blueprint(reply_routes, url_prefix="/reply")
+from routes.board import main as board_routes
+app.register_blueprint(board_routes)
+
+
+@app.route("/<int:board_id>")
+def index(board_id):
+    user = current_user()
+    if board_id == 0:
+        #ms = Topic.cache_all()
+        ts = Topic.find_all(deleted=False)
+    else:
+        #ms = Topic.cache_find(board_id)
+        ts = Topic.find_all(board_id=board_id, deleted=False)
+    token = str(uuid.uuid4())
+    u = current_user()
+    csrf_tokens['token'] = u.id
+    boards = Board.find_all(deleted=False)
+    return render_template("index.html", user=user, ts=ts, token=token, boards=boards)
 
 
 @app.route("/")
-def index():
-    return render_template('index.html', user=None)
-
+def index1():
+    return redirect(url_for('index', board_id=0))
 
 @app.route("/about")
 def about():
-    return render_template('about.html', user=None)
+    user = current_user()
+    return render_template('about.html', user=user)
 
 
 if __name__ == '__main__':
