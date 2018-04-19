@@ -56,7 +56,7 @@ def delete():
         if u is not None:
             print('删除 topic 用户是', u, id)
             Topic.delete(id)
-            return redirect(url_for('.index'))
+            return redirect(url_for('topic.index'))
         else:
             abort(404)
     else:

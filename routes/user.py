@@ -34,7 +34,7 @@ def signin():
             log('登录成功', user.username)
             session['username'] = user.username
             session.permanent = True
-            return redirect(url_for('index'))
+            return redirect(url_for('topic.index'))
 
 
 @main.route('/signout')
