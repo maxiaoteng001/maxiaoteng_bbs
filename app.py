@@ -56,6 +56,8 @@ def index(board_id):
     if u is not None:
         csrf_tokens['token'] = u.id
     boards = Board.find_all(deleted=False)
+    if boards is None:
+        boards = []
     return render_template("index.html", user=user, ts=ts, token=token, boards=boards)
 
 
