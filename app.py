@@ -53,7 +53,8 @@ def index(board_id):
         ts = Topic.find_all(board_id=board_id, deleted=False)
     token = str(uuid.uuid4())
     u = current_user()
-    csrf_tokens['token'] = u.id
+    if u is not None:
+        csrf_tokens['token'] = u.id
     boards = Board.find_all(deleted=False)
     return render_template("index.html", user=user, ts=ts, token=token, boards=boards)
 

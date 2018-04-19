@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-
-<p>这里是首页</p>
-<p>这里是页面区域, 展示主题列表</p>
+<br>
 <a href="/0" class="btn btn-info btn-lg active" role="button">全部</a>
 {% for b in boards %}
     <a href="/{{ b.id }}" class="btn btn-success btn-lg active" role="button">{{ b.title }}</a>
 {% endfor %}
+<a href="{{url_for('topic.new')}}" class="btn btn-info btn-lg active pull-right" role="button">新增话题</a>
 
+<hr>
 <table class="table table-hover table-responsive col-md-8 topic-table">
     <thead class="text-left">
     <th class="active col-md-1">No.</th>
@@ -59,8 +59,15 @@
 
 {% block sidebar %}
 
-<a href="{{url_for('topic.new')}}" class="btn btn-info btn-lg active" role="button">新增话题</a>
-<p>这里是首页</p>
-<p>这里是页面区域, 展示主题列表</p>
+<br><br>
+<h4 class="head">项目说明</h4>
+<hr>
+<ol class="inner">
+    <li>以cnodejs.org为蓝图，开发了属于自己的一个社区</li>
+    <li>用户可以登录/注册, 发帖/看帖/删除自己的发帖/发表评论/修改个人信息</li>
+    <li>后端用Flask框架，前端使用Flask-Bootstrap集成Bootstrap框架，数据库使用MongoDB。</li>
+    <li>服务器部署使用了：Nginx + Gunicorn + Supervisor</li>
+</ol>
+
 {% endblock %}
 
