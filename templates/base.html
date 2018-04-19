@@ -63,9 +63,13 @@
     <!-- 自定义两个块-->
     {% block page_content1 %} {% endblock %}
 
+{% endblock %}
+
+{% block body %}
+{{ super() }}
     <!--这里是页脚-->
     {% block footer %}
-        <footer class="footer text-left">
+        <footer class="footer">
             <div class="container">
 
             <p>此应用以<a href="https://cnodejs.org/">CNode社区</a>为蓝图编写.
