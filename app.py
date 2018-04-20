@@ -18,6 +18,7 @@ import config
 from models.board import Board
 from models.topic import Topic
 from routes import current_user
+from utils import log
 
 app = Flask(__name__)
 

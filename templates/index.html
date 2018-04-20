@@ -32,7 +32,7 @@
             </script>
         </td>
         <td>
-            <p>t.data_count(Reply) }}</p>
+            {{ t.replies() | count }}
             /
             {{ t.views }}
         </td>
@@ -48,7 +48,7 @@
     {% endfor %}
 
     {% else %}
-    <p  style="text-align: center;">话题为空</p>
+    <p >话题为空</p>
     {% endif %}
 
     </tbody>

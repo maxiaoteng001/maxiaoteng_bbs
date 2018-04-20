@@ -1,9 +1,17 @@
 import json
+
+from pymongo import MongoClient
+
+from models.reply import Reply
 from models.user import User
 from models.mongua import Mongua
 import logging
 import time
 ogger = logging.getLogger("bbs")
+from utils import log
+mongua = MongoClient()
+# 设置数据库名称
+db = mongua.my_bbs
 
 
 class Cache(object):
@@ -109,3 +117,5 @@ class Topic(Mongua):
     def user(self):
         u = User.find(id=self.user_id)
         return u
+
+

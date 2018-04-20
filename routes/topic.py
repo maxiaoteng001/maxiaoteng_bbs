@@ -27,12 +27,7 @@ def index():
 @main.route('/<int:id>')
 def detail(id):
     t = Topic.get(id)
-    user_id = t.user_id
-    author = User.find(user_id)
-
-    # log(type(t.data_count(Reply)))
-    # 传递 topic 的所有 reply 到 页面中
-    return render_template("topic/detail.html", user=current_user(), topic=t, author=author)
+    return render_template("topic/detail.html", user=current_user(), topic=t)
 
 
 @main.route("/add", methods=["POST"])

@@ -259,9 +259,9 @@ class Mongua(object):
         """
         name = cls.__name__
         # TODO, 这里应该用 type 替代
-        fk = '{}_id'.format(self.__class__.__name__.lower())
+        fk = '{}_id'.format(self.type)
         query = {
             fk: self.id,
         }
-        count = db[name]._find(query).count()
+        count = db[name].find(query).count()
         return count
