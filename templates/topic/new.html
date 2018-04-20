@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="/static/css/bootstrap-markdown.min.css" />
+{% endblock %}
+
+
+{% block page_content %}
+
+<form method="post" action="{{ url_for('topic.add') }}">
+    <input name="title" type="text" placeholder="请输入标题" />
+    <hr>
+    <select name="board_id" id="board" required>
+            <option value="">请选择</option>
+                {% for b in bs %}
+                <option value="{{ b.id }}">{{ b.title }}</option>
+                {% endfor %}
+        </select>
+
+    <textarea name="content" id="mark-editor" data-provide="markdown" rows="10"
+                placeholder="文章支持 Markdown 语法, 请注意标记代码"></textarea>
+    <hr/>
+    <button type="submit" class="btn btn-primary">发表</button>
+  </form>
+
+{% endblock %}
+
+
+{% block sidebar %}
+
+ <div id='sidebar'>
+  <div class='panel'>
+    <div class='header'>
+      <span class='col_fade'>Markdown 语法参考</span>
+    </div>
+    <div class='inner'>
+      <ol>
+        <li><tt>### 单行的标题</tt></li>
+        <li><tt>**粗体**</tt></li>
+        <li><tt>`console.log('行内代码')`</tt></li>
+        <li><tt>```js\n code \n```</tt> 标记代码块</li>
+        <li><tt>[内容](链接)</tt></li>
+        <li><tt>![文字说明](图片链接)</tt></li>
+      </ol>
+      <span><a href='https://segmentfault.com/markdown' target='_blank'>Markdown 文档</a></span>
+    </div>
+  </div>
+ </div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="/static/js/bootstrap-markdown.js"></script>
+
+<script>
+    $("#editor").markdown({autofocus:false,savable:false})
+</script>
+{% endblock %}
+
+

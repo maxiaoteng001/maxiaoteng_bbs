@@ -27,6 +27,8 @@
             <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">MXT BBS</a>
+        <a class="navbar-brand" href="/">首页</a>
+
     </div>
 
     <div class="collapse navbar-collapse" id="example-navbar-collapse">
@@ -39,8 +41,12 @@
                 <li class="active"><a href='/user/{{user.username}}'>{{user.username}}</a></li>
                 <li class="active"><a href={{url_for("user.signout")}}>退出</a></li>
             {% endif %}
+            <li class="active pull-right"><a href="http://maxiaoteng.xyz">去往个人主页</a></li>
+            <li class="active pull-right"><a href="https://coding.net/u/maxiaoteng/p/my_bbs/git">关于</a></li>
+
         </ul>
     </div>
+
     </div>
     </nav>
 {% endblock %}

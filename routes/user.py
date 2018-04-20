@@ -40,7 +40,7 @@ def signin():
 @main.route('/signout')
 def signout():
     session.pop('username', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('topic.index'))
 
 
 @main.route('/signup', methods=['get', 'post'])
