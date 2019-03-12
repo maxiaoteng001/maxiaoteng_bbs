@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from config import MONGODB_DATABASE, MONGODB_SERVER, MONGODB_PORT, USER, PASSWORD
 
 uri = "mongodb://{username}:{password}@{host}:{port}/{db_name}?authMechanism=MONGODB-CR".format(username=USER,password=PASSWORD,host=MONGODB_SERVER,port=MONGODB_PORT,db_name=MONGODB_DATABASE)
-mongua = MongoClient()
+mongua = MongoClient(uri)
 # 设置数据库名称
 db = mongua.my_bbs
 
