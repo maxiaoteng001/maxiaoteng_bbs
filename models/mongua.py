@@ -29,7 +29,7 @@ def next_id(name):
         'new': True,
     }
     # 存储数据的 id
-    doc = mongua.db['data_id']
+    doc = db['data_id']
     # find_and_modify 是一个原子操作函数
     new_id = doc.find_and_modify(**kwargs).get('seq')
     return new_id
@@ -267,3 +267,7 @@ class Mongua(object):
         }
         count = db[name].find(query).count()
         return count
+
+if __name__ == '__main__':
+    print(db.collection_names())
+    next_id('user')
