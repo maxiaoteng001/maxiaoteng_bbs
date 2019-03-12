@@ -3,10 +3,10 @@ import time
 from pymongo import MongoClient
 from config import MONGODB_DATABASE, MONGODB_SERVER, MONGODB_PORT, USER, PASSWORD
 
-uri = "mongodb://{username}:{password}@{host}:{port}/{db_name}?authMechanism=MONGODB-CR".format(username=USER,password=PASSWORD,host=MONGODB_SERVER,port=MONGODB_PORT,db_name=MONGODB_DATABASE)
-mongua = MongoClient(uri)
+mongua = MongoClient(MONGODB_SERVER, MONGODB_PORT)
 # 设置数据库名称
-db = mongua.my_bbs
+db = mongua[MONGODB_DATABASE]
+db.authenticate(USER, PASSWORD)
 
 
 def timestamp():
