@@ -20,6 +20,8 @@ def index():
     if user.admin is False:
         return redirect(url_for('index'))
     bs = Board.find_all(deleted=False)
+    if bs = []:
+        bs = None
     return render_template('board/admin_index.html', user=user, boards=bs)
 
 
